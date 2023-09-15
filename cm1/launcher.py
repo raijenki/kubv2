@@ -31,7 +31,6 @@ notdone = 0
 chkPt = 0
 lock = threading.Lock()
 
-#MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/hpc-tests/cm1/cm1.exe"
 WORKER_CMD = "/usr/sbin/sshd -D"
 
 #
@@ -154,7 +153,7 @@ def checkpoint():
     podname = f.read().rstrip('\n')
     # For cm1, files are saved only on mpiworker-0
     if "mpiworker-0" in podname:
-        chkpt_path = r'/home/hpc-tests/cm1/'
+        chkpt_path = r'/home/kubv2/cm1/'
         fileList = os.listdir(chkpt_path)
         rstNo = 0
         # Get all the files in the directory
@@ -165,7 +164,7 @@ def checkpoint():
                     rstNo = b
         # Now modify the namelist.input
         line_rstno = " irst      = " + str(rstNo) + ",\n"
-        for line in fileinput.input("/home/hpc-tests/cm1/namelist.input", inplace=True):
+        for line in fileinput.input("/home/kubv2/cm1/namelist.input", inplace=True):
             if line.strip().startswith('irst'):
                 line = line_rstno
             sys.stdout.write(line)
@@ -182,9 +181,9 @@ def start_mpi(extra_args=None):
     os.environ["MPI_HOST"] = MPI_HOST
 
     if extra_args is None: # doesn't matter for cm1 
-        MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " /home/hpc-tests/cm1/cm1.exe"
+        MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " /home/kubv2/cm1/cm1.exe"
     else:
-        MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " /home/hpc-tests/cm1/cm1.exe"
+        MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " /home/kubv2/cm1/cm1.exe"
 
     #app = subprocess.Popen(shlex.split(MASTER_CMD), start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     app = subprocess.Popen(shlex.split(MASTER_CMD), start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

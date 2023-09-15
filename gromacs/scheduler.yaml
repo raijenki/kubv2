@@ -27,6 +27,6 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: task-pv-storage
-        command: ["/usr/bin/python3", "hpc-tests/gromacs/scheduler.py"]
+        command: ["/usr/bin/python3", "kubv2/gromacs/scheduler.py"]
         args: ["2"]
       restartPolicy: Never

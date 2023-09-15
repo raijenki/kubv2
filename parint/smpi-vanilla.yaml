@@ -23,7 +23,7 @@ spec:
                 - |
                   MPI_HOST=`cat /etc/volcano/mpiworker.host | tr "\n" ","`;
                   mkdir -p /var/run/sshd; /usr/sbin/sshd;
-                  mpiexec --allow-run-as-root -wdir /home/hpc-tests/stream-mpi/ --host ${MPI_HOST} -np 4 /home/hpc-tests/stream-mpi/stream_mpi 100000000 100;
+                  mpiexec --allow-run-as-root -wdir /home/kubv2/stream-mpi/ --host ${MPI_HOST} -np 4 /home/kubv2/stream-mpi/stream_mpi 100000000 100;
               image: raijenki/mpik8s:smpi
               imagePullPolicy: Always
               name: mpimaster

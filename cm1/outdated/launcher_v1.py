@@ -12,7 +12,7 @@ STOP_TIMEOUT = 20
 app = None
 app_ssh = None
 MPI_HOST = None
-#MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/hpc-tests/cm1/cm1.exe"
+#MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/kubv2/cm1/cm1.exe"
 WORKER_CMD = "/usr/sbin/sshd -D"
 
 def signal_handler(sig, _frame):
@@ -43,7 +43,7 @@ def main_master():
     ssh_hosts = open("/etc/volcano/mpiworker.host")
     MPI_HOST = ','.join(line.strip() for line in ssh_hosts)
     os.environ["MPI_HOST"] = MPI_HOST
-    MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/hpc-tests/cm1/cm1.exe"
+    MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/kubv2/cm1/cm1.exe"
     #print("Here are the hosts: ")
     #print(MPI_HOST)
     app = subprocess.Popen(shlex.split(MASTER_CMD), preexec_fn=os.setsid)

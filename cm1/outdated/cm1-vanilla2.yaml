@@ -23,7 +23,7 @@ spec:
                 - |
                   MPI_HOST=`cat /etc/volcano/mpiworker.host | tr "\n" ","`;
                   mkdir -p /var/run/sshd; /usr/sbin/sshd;
-                  mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host ${MPI_HOST} -np 4 /home/hpc-tests/cm1/cm1.exe;
+                  mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host ${MPI_HOST} -np 4 /home/kubv2/cm1/cm1.exe;
               image: raijenki/mpik8s:cm1
               imagePullPolicy: Always
               name: mpimaster

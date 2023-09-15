@@ -24,7 +24,7 @@ spec:
             persistentVolumeClaim:
               claimName: task-pv-claim
           containers:
-            - command: ["/usr/bin/python3", "hpc-tests/cm1/launcher.py"]
+            - command: ["/usr/bin/python3", "kubv2/cm1/launcher.py"]
               image: raijenki/mpik8s:cm1arm
               imagePullPolicy: Always
               name: mpimaster
@@ -41,7 +41,7 @@ spec:
       template:
         spec:
           containers:
-            - command: ["/usr/bin/python3", "hpc-tests/cm1/launcher.py"]
+            - command: ["/usr/bin/python3", "kubv2/cm1/launcher.py"]
               image: raijenki/mpik8s:cm1arm
               imagePullPolicy: Always
               name: mpiworker

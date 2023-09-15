@@ -38,7 +38,7 @@ class Kubernetes:
             image_pull_policy=pull_policy,
             volume_mounts=[volume_mount],
             #args=["sleep", "5"]
-            command=["/usr/bin/python3", "hpc-tests/stream-mpi/launcher.py"],
+            command=["/usr/bin/python3", "kubv2/stream-mpi/launcher.py"],
         )
 
         logging.info(

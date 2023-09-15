@@ -30,7 +30,6 @@ notdone = 0
 chkPt = 0
 lock = threading.Lock()
 
-#MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host " +  str(MPI_HOST) + " -np 4 /home/hpc-tests/cm1/cm1.exe"
 WORKER_CMD = "/usr/sbin/sshd -D"
 
 #
@@ -154,7 +153,7 @@ def checkpoint():
     podname = f.read().rstrip('\n')
     # For cm1, files are saved only on mpiworker-0
     if "mpiworker-0" in podname:
-        chkpt_path = r'/home/hpc-tests/gromacs/'
+        chkpt_path = r'/home/kubv2/gromacs/'
         fileList = os.listdir(chkpt_path)
         rstNo = 0
         # Get all the files in the directory
@@ -165,7 +164,7 @@ def checkpoint():
                     rstNo = b
         # Now modify the namelist.input
         line_rstno = " irst      = " + str(rstNo) + ",\n"
-        for line in fileinput.input("/home/hpc-tests/cm1/namelist.input", inplace=True):
+        for line in fileinput.input("/home/kubv2/cm1/namelist.input", inplace=True):
             if line.strip().startswith('irst'):
                 line = line_rstno
             sys.stdout.write(line)
@@ -182,7 +181,7 @@ def start_mpi():
     os.environ["MPI_HOST"] = MPI_HOST
     logs = open("/data/gromacs.txt", "w+")
     error_logs = open("/data/gromacs_error.txt", "w+")
-    MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/hpc-tests/gromacs/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " gmx_mpi mdrun -s benchMEM.tpr -ntomp 1 -cpi state.cpt"
+    MASTER_CMD = "mpiexec --allow-run-as-root -wdir /home/kubv2/gromacs/ --host " +  str(MPI_HOST) + " -np " + str(getNumberOfRanks()) + " gmx_mpi mdrun -s benchMEM.tpr -ntomp 1 -cpi state.cpt"
     #app = subprocess.Popen(shlex.split(MASTER_CMD), start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     app = subprocess.Popen(shlex.split(MASTER_CMD), start_new_session=True, stdout=logs, stderr=error_logs)
     return 0

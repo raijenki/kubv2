@@ -25,7 +25,7 @@ spec:
               claimName: task-pv-claim
           containers:
             - command: ["/usr/bin/python3", "hpc-tests/cm1/launcher.py"]
-              image: raijenki/mpik8s:cm1
+              image: raijenki/mpik8s:cm1arm
               imagePullPolicy: Always
               name: mpimaster
               volumeMounts:
@@ -42,7 +42,7 @@ spec:
         spec:
           containers:
             - command: ["/usr/bin/python3", "hpc-tests/cm1/launcher.py"]
-              image: raijenki/mpik8s:cm1
+              image: raijenki/mpik8s:cm1arm
               imagePullPolicy: Always
               name: mpiworker
               ports:

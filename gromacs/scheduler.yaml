@@ -21,7 +21,7 @@ spec:
             claimName: task-pv-claim
       containers:
       - name: stream
-        image: raijenki/mpik8s:gromacs
+        image: raijenki/mpik8s:gromacsarm
         imagePullPolicy: IfNotPresent
           #command: ["/bin/sleep", "7200"]
         volumeMounts:

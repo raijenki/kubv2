@@ -4,7 +4,7 @@ CFLAGS = -O1 -mcmodel=large
 
 all: parint
 
-parint: stream_mpi.c
+parint: parint.c
 	$(CC) $(CFLAGS) parint.c -o parint
 
 clean:

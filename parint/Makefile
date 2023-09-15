@@ -1,5 +1,5 @@
 CC = mpicc
-CFLAGS = -O1 -mcmodel=large
+CFLAGS = -O0 -mcmodel=large
 
 
 all: parint

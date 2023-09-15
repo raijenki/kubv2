@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.mpi_monitor";
+option java_outer_classname = "MPIMonitorProto";
+option objc_class_prefix = "MMG";
+
+package mpi_monitor;
+
+// Interface exported by the server.
+service Monitor {
+	// We order the server to scale (from: scheduler, to: MPIServer)
+	rpc Scale(additionalNodes) returns (Confirmation) {}
+
+	// We send the files for updating all our hosts (from: scaled client, to: MPIServer)
+	rpc RetrieveKeys(nodeName) returns (SSHKeys) {}
+
+	// We tell that our auxiliary pods are ready to start the job
+	rpc JobInit(nodeName) returns (Confirmation) {}
+
+	// This should be used for checking whether the master is alive
+	rpc activeServer(Dummy22) returns (Confirmation) {} 
+
+	// This should be used for telling server that checkpointing is done
+	rpc checkpointing(Dummy22) returns (Confirmation) {} 
+
+	// This should be used for telling server that execution is over
+	rpc endExec(Dummy22) returns (Confirmation) {} 
+}
+
+message Dummy22 {
+	string mtest = 1;
+}
+
+message additionalNodes {
+	int32 nodes = 1;
+	string mode = 2;
+}
+
+message nodeName {
+	string nodeIP = 1;
+}
+
+message Confirmation {
+	string confirmMessage = 1;
+	int32 confirmId = 2;
+}
+
+message SSHKeys {
+	string pubJobKey = 1;
+	string privJobKey = 2;
+	int32 confirmId = 3;
+}

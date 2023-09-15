@@ -1,0 +1,31 @@
+cm1
+
+1 worker:
+- Total time:    306.906250
+- Total time:    308.843750
+- Total time:    301.875000
+
+2 workers:
+- Total time:    290.281250
+- Total time:    289.031250
+- Total time: 	 289.875000
+
+3 workers:
+-  Total time:    128.406250    
+-  Total time:    127.374992
+-  Total time:    129.343735
+
+4 workers: 
+- Total time:    114.906250
+- Total time:    101.531250
+-  Total time:    106.906250    
+
+5 workers:
+-  Total time:    97.8749924    
+-  Total time:    105.000000    
+-  Total time:    107.500000
+
+6 workers:
+- Total time:    87.0000000
+- Total time:    89.0937500    
+- Total time:    97.9375000

@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sched
+spec:
+  manualSelector: true
+  selector:
+    matchLabels:
+      app: sched
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: sched
+    spec:
+      serviceAccountName: scaler-dft
+      volumes:
+        - name: task-pv-storage
+          persistentVolumeClaim:
+            claimName: task-pv-claim
+      containers:
+      - name: stream
+        image: raijenki/mpik8s:cm1
+        imagePullPolicy: IfNotPresent
+          #command: ["/bin/sleep", "7200"]
+        volumeMounts:
+          - mountPath: /data
+            name: task-pv-storage
+        command: ["/usr/bin/python3", "hpc-tests/cm1/scheduler.py"]
+        args: ["2"]
+      restartPolicy: Never

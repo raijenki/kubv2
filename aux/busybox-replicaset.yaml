@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: busybox
+  labels:
+    role: box
+spec:
+  replicas: 14
+  selector:
+    matchLabels:
+      role: box
+  template:
+    metadata:
+      labels:
+        role: box
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command:
+          - sleep
+          - "3600"
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: 1
+          limits:
+            memory: "128Mi"
+            cpu: 1
+

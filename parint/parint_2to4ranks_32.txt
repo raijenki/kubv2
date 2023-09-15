@@ -1,0 +1,1431 @@
+STARTING 32 - Trial 1 - Base 165
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T13:25:12Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T13:25:12Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T13:30:41Z
+  Resource Version:  1286252
+  UID:               c606a36b-c006-4541-a6cd-78ba5b94fca7
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T13:25:13Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T13:25:22Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T13:30:41Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T13:30:41Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        5m29.435676547s
+  State:
+    Last Transition Time:  2023-06-19T13:30:41Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                     From                   Message
+  ----     ------           ----                    ----                   -------
+  Warning  PodGroupPending  3m13s (x14 over 8m34s)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m7s                    vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 2 - Base 165
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T13:33:59Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T13:33:59Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T13:39:31Z
+  Resource Version:  1286640
+  UID:               8da39101-7b48-4c54-8d45-d32e3047e16b
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T13:33:59Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T13:34:05Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T13:39:31Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T13:39:31Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        5m32.907933778s
+  State:
+    Last Transition Time:  2023-06-19T13:39:31Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                    From                   Message
+  ----     ------           ----                   ----                   -------
+  Warning  PodGroupPending  3m6s (x14 over 8m34s)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m3s                   vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 3 - Base 165
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T13:42:45Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T13:42:45Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T13:48:12Z
+  Resource Version:  1287012
+  UID:               0f58bc76-eeb4-4579-a4e3-f82faac45e51
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T13:42:45Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T13:42:51Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T13:48:12Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T13:48:12Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        5m27.324958389s
+  State:
+    Last Transition Time:  2023-06-19T13:48:12Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                     From                   Message
+  ----     ------           ----                    ----                   -------
+  Warning  PodGroupPending  3m16s (x14 over 8m34s)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m8s                    vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 1 - Base 270
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T13:51:31Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T13:51:31Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T13:58:22Z
+  Resource Version:  1287425
+  UID:               821e45d5-28bc-46f0-97fd-b98be656b137
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T13:51:31Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T13:51:36Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T13:58:22Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T13:58:22Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        6m51.11898975s
+  State:
+    Last Transition Time:  2023-06-19T13:58:22Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  3m32s (x14 over 10m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m29s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 2 - Base 270
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T14:02:02Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T14:02:02Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T14:08:40Z
+  Resource Version:  1287833
+  UID:               3e7190f4-4b93-4094-866a-867e5e71c84c
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T14:02:02Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T14:02:07Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T14:08:40Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T14:08:40Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        6m38.079521065s
+  State:
+    Last Transition Time:  2023-06-19T14:08:40Z
+    Phase:                 Completed
+  Succeeded:               2
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  1
+  Version:          4
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  3m45s (x13 over 10m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m43s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 3 - Base 270
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-19T14:12:33Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-19T14:12:33Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-19T14:19:16Z
+  Resource Version:  1288231
+  UID:               25c1a311-679e-4dcd-bdd2-056d556df5b9
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-19T14:12:33Z
+    Status:                Pending
+    Last Transition Time:  2023-06-19T14:12:38Z
+    Status:                Running
+    Last Transition Time:  2023-06-19T14:19:16Z
+    Status:                Completing
+    Last Transition Time:  2023-06-19T14:19:17Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        6m44.017889468s
+  State:
+    Last Transition Time:  2023-06-19T14:19:17Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  3m42s (x13 over 10m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    3m37s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 1 - Base 380
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-20T07:49:03Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-20T07:49:03Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-20T07:56:40Z
+  Resource Version:  1319432
+  UID:               c4a8ca2c-4043-4b89-ae1e-6579f211c9ad
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-20T07:49:03Z
+    Status:                Pending
+    Last Transition Time:  2023-06-20T07:49:11Z
+    Status:                Running
+    Last Transition Time:  2023-06-20T07:56:40Z
+    Status:                Completing
+    Last Transition Time:  2023-06-20T07:56:40Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        7m37.472889933s
+  State:
+    Last Transition Time:  2023-06-20T07:56:40Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  4m38s (x14 over 12m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    4m34s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 2 - Base 380
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-20T08:01:24Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-20T08:01:24Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-20T08:08:59Z
+  Resource Version:  1319820
+  UID:               74092ea4-6b1d-487c-b329-2dfebdabeefa
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-20T08:01:24Z
+    Status:                Pending
+    Last Transition Time:  2023-06-20T08:01:30Z
+    Status:                Running
+    Last Transition Time:  2023-06-20T08:08:59Z
+    Status:                Completing
+    Last Transition Time:  2023-06-20T08:08:59Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        7m35.106540898s
+  State:
+    Last Transition Time:  2023-06-20T08:08:59Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  4m44s (x14 over 12m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    4m36s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED
+STARTING 32 - Trial 3 - Base 380
+Name:         smpi-job
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  batch.volcano.sh/v1alpha1
+Kind:         Job
+Metadata:
+  Creation Timestamp:  2023-06-20T08:13:46Z
+  Generation:          1
+  Managed Fields:
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:spec:
+        .:
+        f:minAvailable:
+        f:plugins:
+          .:
+          f:ssh:
+          f:svc:
+        f:schedulerName:
+        f:tasks:
+    Manager:      kubectl-create
+    Operation:    Update
+    Time:         2023-06-20T08:13:46Z
+    API Version:  batch.volcano.sh/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:minAvailable:
+        f:runningDuration:
+        f:state:
+          .:
+          f:lastTransitionTime:
+          f:phase:
+        f:succeeded:
+        f:taskStatusCount:
+          .:
+          f:mpimaster:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+          f:mpiworker:
+            .:
+            f:phase:
+              .:
+              f:Succeeded:
+        f:version:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2023-06-20T08:21:23Z
+  Resource Version:  1320213
+  UID:               b0af1813-85df-4265-b092-2dfede17acd1
+Spec:
+  Max Retry:      3
+  Min Available:  3
+  Plugins:
+    Ssh:
+    Svc:
+      --disable-network-policy=true
+  Queue:           default
+  Scheduler Name:  volcano
+  Tasks:
+    Max Retry:      3
+    Min Available:  1
+    Name:           mpimaster
+    Policies:
+      Action:  CompleteJob
+      Event:   TaskCompleted
+    Replicas:  1
+    Template:
+      Metadata:
+        Labels:
+          app.kubernetes.io/name:  grpc-server
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpimaster
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+    Max Retry:           3
+    Min Available:       2
+    Name:                mpiworker
+    Replicas:            2
+    Template:
+      Metadata:
+      Spec:
+        Containers:
+          Command:
+            /usr/bin/python3
+            hpc-tests/stream-mpi/launcher.py
+          Image:              raijenki/mpik8s:smpi
+          Image Pull Policy:  Always
+          Name:               mpiworker
+          Ports:
+            Container Port:  22
+            Name:            mpijob-port
+            Protocol:        TCP
+          Resources:
+          Volume Mounts:
+            Mount Path:  /data
+            Name:        task-pv-storage
+          Working Dir:   /home
+        Restart Policy:  Never
+        Volumes:
+          Name:  task-pv-storage
+          Persistent Volume Claim:
+            Claim Name:  task-pv-claim
+Status:
+  Conditions:
+    Last Transition Time:  2023-06-20T08:13:46Z
+    Status:                Pending
+    Last Transition Time:  2023-06-20T08:13:51Z
+    Status:                Running
+    Last Transition Time:  2023-06-20T08:21:23Z
+    Status:                Completing
+    Last Transition Time:  2023-06-20T08:21:23Z
+    Status:                Completed
+  Min Available:           3
+  Running Duration:        7m37.713595935s
+  State:
+    Last Transition Time:  2023-06-20T08:21:23Z
+    Phase:                 Completed
+  Succeeded:               3
+  Task Status Count:
+    Mpimaster:
+      Phase:
+        Succeeded:  1
+    Mpiworker:
+      Phase:
+        Succeeded:  2
+  Version:          3
+Events:
+  Type     Reason           Age                   From                   Message
+  ----     ------           ----                  ----                   -------
+  Warning  PodGroupPending  4m34s (x13 over 12m)  vc-controller-manager  PodGroup default:smpi-job unschedule,reason: 3/0 tasks in gang unschedulable: pod group is not ready, 3 minAvailable
+  Normal   ExecuteAction    4m33s                 vc-controller-manager  Start to execute action CompleteJob
+FINISHED

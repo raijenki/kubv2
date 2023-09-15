@@ -1,0 +1,25 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: cm1-job-scale
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: mpiworker
+      template:
+        spec:
+          containers:
+            - command: ["/bin/sleep", "7200"]
+              image: raijenki/mpik8s:cm1
+              imagePullPolicy: Always
+              name: mpiworker
+              securityContext:
+                readOnlyRootFilesystem: false
+              ports:
+                - containerPort: 22
+                  name: mpijob-port
+              workingDir: /home
+          restartPolicy: OnFailure
+---

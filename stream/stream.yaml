@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stream
+spec:
+  manualSelector: true
+  selector:
+    matchLabels:
+      app: stream
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: stream
+    spec:
+      volumes:
+        - name: task-pv-storage
+          persistentVolumeClaim:
+            claimName: task-pv-claim
+      containers:
+      - name: stream
+        image: raijenki/mpik8s:stream
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /data
+            name: task-pv-storage
+        command: ["/usr/bin/python3", "/home/hpc-tests/stream/launcher.py"]
+        args: ["1500"]
+        resources:
+          requests:
+            cpu: 8
+            memory: "4000Mi"
+        env:
+          - name: OMP_NUM_THREADS
+            valueFrom:
+              resourceFieldRef:
+                containerName: stream
+                resource: requests.cpu
+      restartPolicy: OnFailure

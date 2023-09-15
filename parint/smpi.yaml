@@ -1,0 +1,73 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: smpi-job
+spec:
+  minAvailable: 3
+  schedulerName: volcano
+  plugins:
+    ssh: []
+    svc: ["--disable-network-policy=true"]
+  tasks:
+    - replicas: 1
+      name: mpimaster
+      policies:
+        - event: TaskCompleted
+          action: CompleteJob
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: grpc-server
+        spec:
+          volumes:
+          - name: task-pv-storage
+            persistentVolumeClaim:
+              claimName: task-pv-claim
+          containers:
+            - command: ["/usr/bin/python3", "hpc-tests/stream-mpi/launcher.py"]
+              image: raijenki/mpik8s:smpi
+              imagePullPolicy: Always
+              name: mpimaster
+              volumeMounts:
+              - mountPath: /data
+                name: task-pv-storage
+              ports:
+                - containerPort: 22
+                  name: mpijob-port
+              workingDir: /home
+          restartPolicy: Never
+    - replicas: 2
+      name: mpiworker
+      template:
+        spec:
+          volumes:
+          - name: task-pv-storage
+            persistentVolumeClaim:
+              claimName: task-pv-claim
+          containers:
+            - command: ["/usr/bin/python3", "hpc-tests/stream-mpi/launcher.py"]
+              image: raijenki/mpik8s:smpi
+              imagePullPolicy: Always
+              name: mpiworker
+              volumeMounts:
+                - mountPath: /data
+                  name: task-pv-storage
+              ports:
+                - containerPort: 22
+                  name: mpijob-port
+              workingDir: /home
+          restartPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-server
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: grpc-server
+  ports:
+    - protocol: TCP
+      port: 30173
+      targetPort: 30173
+      nodePort: 30173

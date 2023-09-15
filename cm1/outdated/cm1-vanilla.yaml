@@ -1,0 +1,53 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: cm1-job
+spec:
+  minAvailable: 4
+  schedulerName: volcano
+  plugins:
+    ssh: []
+    svc: []
+  tasks:
+    - replicas: 1
+      name: mpimaster
+      policies:
+        - event: TaskCompleted
+          action: CompleteJob
+      template:
+        spec:
+          containers:
+            - command:
+                - /bin/sh
+                - -c
+                - |
+                  MPI_HOST=`cat /etc/volcano/mpiworker.host | tr "\n" ","`;
+                  mkdir -p /var/run/sshd; /usr/sbin/sshd;
+                  mpiexec --allow-run-as-root -wdir /home/hpc-tests/cm1/ --host ${MPI_HOST} -np 3 /home/hpc-tests/cm1/cm1.exe;
+              image: raijenki/mpik8s:cm1
+              imagePullPolicy: IfNotPresent
+              name: mpimaster
+              ports:
+                - containerPort: 22
+                  name: mpijob-port
+              workingDir: /home
+          restartPolicy: OnFailure
+    - replicas: 3
+      name: mpiworker
+      template:
+        spec:
+          containers:
+            - command:
+                - /bin/sh
+                - -c
+                - |
+                  mkdir -p /var/run/sshd; /usr/sbin/sshd -D;
+              image: raijenki/mpik8s:cm1
+              imagePullPolicy: IfNotPresent
+              name: mpiworker
+              ports:
+                - containerPort: 22
+                  name: mpijob-port
+              workingDir: /home
+          restartPolicy: OnFailure
+---

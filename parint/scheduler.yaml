@@ -27,6 +27,6 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: task-pv-storage
-        command: ["/usr/bin/python3", "hpc-tests/stream-mpi/scheduler.py"]
+        command: ["/usr/bin/python3", "kubv2/parint/scheduler.py"]
         args: ["4"]
       restartPolicy: Never

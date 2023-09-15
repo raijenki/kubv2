@@ -29,7 +29,7 @@ RUN cd /home && git clone https://github.com/raijenki/kubv2.git \
 
 FROM debian:12-slim As prod
 RUN apt-get update && apt-get install -y glibc-source ssh openmpi-bin libgomp1 python3 python3-pip git time
-RUN pip install grpcio grpcio-tools psutil kubernetes retrying
+RUN pip install grpcio grpcio-tools psutil kubernetes retrying --break-system-packages
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 RUN cd /home && git clone http://github.com/raijenki/kubv2.git && cd kubv2/parint && python3 -m grpc_tools.protoc -I. --python_out=. --pyi_out=. --grpc_python_out=. mpi_monitor.proto
 COPY --from=base /home/kubv2/parint/parint /home/kubv2/parint/parint

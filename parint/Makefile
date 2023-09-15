@@ -1,11 +1,11 @@
 CC = mpicc
-CFLAGS = -O0 -mcmodel=large
+CFLAGS = -O1 -mcmodel=large
 
 
-all: stream_mpi
+all: parint
 
-stream_c: stream_mpi.c
-	$(CC) $(CFLAGS) stream_mpi.c -o stream_mpi
+parint: stream_mpi.c
+	$(CC) $(CFLAGS) parint.c -o parint
 
 clean:
-	rm -f stream_mpi.exe stream_mpi.exe *.o
+	rm -f parint *.o

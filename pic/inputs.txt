@@ -1,3 +1,0 @@
-GEM_2D.inp
-GEM_2D_1.inp
-GEM_2D_2.inp

@@ -69,6 +69,37 @@ class Monitor(mpi_monitor_pb2_grpc.MonitorServicer):
         checkpoint() # Server checkpoint, application-based
         return mpi_monitor_pb2.Confirmation(confirmMessage='All jobs are stopped, waiting for new replicas!', confirmId=1)
 
+    # This is to the same as above but we just want to make the function explicit
+    def Restart(self, request, context):
+        global app
+        global startedRanks
+        global chkPt
+        global totalRanks        
+        chkPt = 1
+
+        podRsqt = request.names
+        podRsqt = podRsqt.split(",")
+        podRsqt = [x + '\n' for x in podRsqt]
+
+        with lock:
+            totalRanks = totalRanks - request.nodes
+            with open('/root/mpiworker.host', 'r') as hostFile:
+                inputFilelines = hostFile.readlines()
+                with open('/root/mpiworker.host', 'w') as hostFile:
+                    for textline in inputFilelines:
+                        if textline not in podRsqt:
+                            hostFile.write(textline)
+
+        # SIGTERM the app
+        os.killpg(os.getpgid(app.pid), signal.SIGTERM)
+        # Wait few seconds so app can deal with whatever it needs
+        count = 5
+        time.sleep(count)
+        #os.killpg(os.getpgid(app.pid), signal.SIGKILL) # Forcefully kill it
+        #app.wait() # Wait the app to be killed
+        checkpoint() # Server checkpoint, application-based
+        return mpi_monitor_pb2.Confirmation(confirmMessage='All jobs are stopped, waiting for new replicas!', confirmId=1)
+    
     def checkpointing(self, request, context):
         global chkPt
         chkPt = 2

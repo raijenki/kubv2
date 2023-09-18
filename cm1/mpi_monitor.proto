@@ -12,6 +12,9 @@ service Monitor {
 	// We order the server to scale (from: scheduler, to: MPIServer)
 	rpc Scale(additionalNodes) returns (Confirmation) {}
 
+	// This one is to restart the application as we might want to kill and restart a pod
+	rpc Restart(podsRemoval) returns (Confirmation) {}
+
 	// We send the files for updating all our hosts (from: scaled client, to: MPIServer)
 	rpc RetrieveKeys(nodeName) returns (SSHKeys) {}
 
@@ -35,6 +38,11 @@ message Dummy22 {
 message additionalNodes {
 	int32 nodes = 1;
 	string mode = 2;
+}
+
+message podsRemoval {
+	int32 amount = 1;
+	string names = 2;
 }
 
 message nodeName {

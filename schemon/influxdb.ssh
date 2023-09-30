@@ -2,10 +2,10 @@ helm repo add influxdata https://helm.influxdata.com/
 helm upgrade --install opencube influxdata/influxdb -f values.yaml
 
 #kubectl get svc opencube-influxdb -o jsonpath='{.spec.clusterIP}'
-To retrieve the default user name:
+#To retrieve the default user name:
 
-  echo $(kubectl get secret opencube-influxdb-auth -o "jsonpath={.data['influxdb-user']}" --namespace default | base64 --decode)
+#  echo $(kubectl get secret opencube-influxdb-auth -o "jsonpath={.data['influxdb-user']}" --namespace default | base64 --decode)
 
-To retrieve the default user password:
+#To retrieve the default user password:
 
-  echo $(kubectl get secret opencube-influxdb-auth -o "jsonpath={.data['influxdb-password']}" --namespace default | base64 --decode)
+#  echo $(kubectl get secret opencube-influxdb-auth -o "jsonpath={.data['influxdb-password']}" --namespace default | base64 --decode)

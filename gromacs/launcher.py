@@ -18,7 +18,9 @@ import logging
 import grpc
 import mpi_monitor_pb2
 import mpi_monitor_pb2_grpc
+from influxdb import InfluxDBClient
 
+APP_NAME = 'gromacs'
 STOP_TIMEOUT = 20
 app = None
 app_ssh = None

@@ -47,9 +47,11 @@ char *njmon_command;
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <signal.h>
-
+#include <inttypes.h>
+#include <sys/ioctl.h>
+#include <linux/perf_event.h>
+#include <asm/unistd.h>
 #include <memory.h>
-
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <net/if.h>
@@ -2963,6 +2965,20 @@ char *clean_string(char *s)
     return s;
 }
 
+void etc_hw_mem(long long int l2refill_long[8]) {
+	psection("hw_mem_refill");
+	plong("refill_cpu0", l2refill_long[0]);
+	plong("refill_cpu1", l2refill_long[1]);
+	plong("refill_cpu2", l2refill_long[2]);
+	plong("refill_cpu3", l2refill_long[3]);
+	plong("refill_cpu4", l2refill_long[4]);
+	plong("refill_cpu5", l2refill_long[5]);
+	plong("refill_cpu6", l2refill_long[6]);
+	plong("refill_cpu7", l2refill_long[7]);
+	psectionend();
+
+}
+
 void etc_os_release()
 {
     static FILE *fp = 0;
@@ -4609,10 +4625,37 @@ int i;
 	}
 }
 
+static long perf_event_open(struct perf_event_attr *hw_event, pid_t pid,
+                            int cpu, int group_fd, unsigned long flags) {
+    return syscall(__NR_perf_event_open, hw_event, pid, cpu, group_fd, flags);
+}
+
 /* MAIN */
 
 int main(int argc, char **argv)
 {
+	// This is for hardware counters
+    struct perf_event_attr pe[8];
+    int fdmem[8];
+    long long l2_refill_count[8];
+    memset(&pe, 0, sizeof(struct perf_event_attr));
+
+    for(int i = 0; i <= 7; i++) {
+    pe[i].type = PERF_TYPE_RAW;
+    pe[i].size = sizeof(struct perf_event_attr);
+    pe[i].config = 0x17; // L2D_CACHE_REFILL_LD event code
+    pe.disabled = 1; // start in disabled state
+    pe.exclude_kernel = 1; // exclude kernel space
+    pe.exclude_hv = 1; // exclude hypervisor space
+
+    fdmem[i] = perf_event_open(&pe[i], -1, i, -1, 0);
+    if (fdmem[i] == -1) {
+        perror("Error opening perf event");
+        exit(EXIT_FAILURE);
+    	}
+	}
+
+
     long maxloops = -1;
     long seconds = 60;
     int target_mode = 0;
@@ -5137,6 +5180,7 @@ int main(int argc, char **argv)
 
     gettimeofday(&tv, 0);
     previous_time = (double) tv.tv_sec + (double) tv.tv_usec * 1.0e-6;
+    
 
     if (seconds <= 60) 
 	sleep(seconds);
@@ -5144,6 +5188,9 @@ int main(int argc, char **argv)
 	sleep(60);	/* if a long time between snapshot do a quick one 
 				   now so we have some stats in the output file */
     
+	
+
+	
     gettimeofday(&tv, 0);
     current_time = (double) tv.tv_sec + (double) tv.tv_usec * 1.0e-6;
     elapsed = previous_time - current_time;
@@ -5151,6 +5198,12 @@ int main(int argc, char **argv)
     /* have to initialise just this one */
     execute_start = (double) tv.tv_sec + ((double) tv.tv_usec * 1.0e-6);
     for (loop = 0; maxloops == -1 || loop < maxloops; loop++) {
+		// L2D_REFILL: START READING WHILE SLEEPING
+		for(int i = 0; i <= 7; i++) {
+		ioctl(fdmem[i], PERF_EVENT_IOC_RESET, 0);
+		ioctl(fdmem[i], PERF_EVENT_IOC_ENABLE, 0);
+		}
+
         /* sanity check */
         if(execute_time < 0.0)
             execute_time = 0.0;
@@ -5167,6 +5220,11 @@ int main(int argc, char **argv)
             sleep_secs = seconds;
             sleep_usecs= 0;
         }
+		// L2D_REFILL: FINISH READING 
+		for(int i = 0; i <= 7; i++) {
+		ioctl(fdmem[i], PERF_EVENT_IOC_DISABLE, 0);
+		read(fdmem[i], &l2_refill_count[i], sizeof(long long int));
+		}
        if (loop != 0) {  /* don't sleep on the first loop */
             DEBUG printf("calling usleep(%6.4f) . . .\n", sleep_target);
 /* testing 
@@ -5231,6 +5289,7 @@ int main(int argc, char **argv)
 	proc_version();
 	lscpu();
 	proc_stat(elapsed, PRINT_TRUE,reduced_stats);
+	etc_hw_mem(l2_refill_count);
 	proc_cpuinfo(reduced_stats);
         proc_loadavg();
 	read_data_number("meminfo", elapsed);
@@ -5287,6 +5346,9 @@ int main(int argc, char **argv)
     if (njmon_internal_stats)
 	pstats();
     push();
+	for (int i = 0; i <= 7; i++) {
+		close(fdmem[i]);
+	}
     close(sockfd);		/* if a socket, let it close cleanly */
     remove_pid_file();
     sleep(1);

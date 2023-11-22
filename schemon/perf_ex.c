@@ -25,7 +25,7 @@ int main() {
     pe.exclude_hv = 1; // exclude hypervisor space
 
     for(auto i = 0; i <= 7; i++) {
-    fd[i] = perf_event_open(&pe, -1, 0, -1, 0);
+    fd[i] = perf_event_open(&pe, -1, i, -1, 0);
     if (fd[i] == -1) {
         perror("Error opening perf event");
         exit(EXIT_FAILURE);

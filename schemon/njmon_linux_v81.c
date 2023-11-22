@@ -4644,9 +4644,9 @@ int main(int argc, char **argv)
     pe[i].type = PERF_TYPE_RAW;
     pe[i].size = sizeof(struct perf_event_attr);
     pe[i].config = 0x17; // L2D_CACHE_REFILL_LD event code
-    pe.disabled = 1; // start in disabled state
-    pe.exclude_kernel = 1; // exclude kernel space
-    pe.exclude_hv = 1; // exclude hypervisor space
+    pe[i].disabled = 1; // start in disabled state
+    pe[i].exclude_kernel = 1; // exclude kernel space
+    pe[i].exclude_hv = 1; // exclude hypervisor space
 
     fdmem[i] = perf_event_open(&pe[i], -1, i, -1, 0);
     if (fdmem[i] == -1) {

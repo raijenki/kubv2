@@ -17,15 +17,16 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /run/systemd && echo 'docker' > /run/systemd/container
 RUN  apt-get update --fix-missing \
      && apt-get install -y git wget cmake zip unzip \
-     && apt-get install -y build-essential gfortran libopenmpi-dev libfftw3-dev \
-     && apt-get install -y ssh time python3 libopenblas-dev libhdf5-dev libboost-dev
-RUN cd /home/ && mkdir nekoRS && git clone https://github.com/Nek5000/nekRS.git nekRSsrc && cd nekRSsrc && mkdir build && cd build && CC=mpicc CXX=mpic++ FC=gfortran cmake -DCMAKE_INSTALL_PREFIX=/home/nekRS/ ../ && make -j4 && make install
-RUN apt-get install libxml2-dev -y
-RUN cd /home/ && mkdir qmcpack && git clone https://github.com/QMCPACK/qmcpack.git qmcpacksrc && cd qmcpacksrc/build && cmake -DCMAKE_INSTALL_PREFIX=/home/qmcpack/ -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx .. && make -j4 && make install
+     && apt-get install -y build-essential gfortran libopenmpi-dev \
+     && apt-get install -y ssh time python3
+RUN cd /home/ && git clone https://github.com/MKLepium/iPIC3D.git \
+    && cd iPIC3D && mkdir build && cd build \
+    && cmake .. && make && make install
+RUN mv /home/iPIC3D/build/iPIC3D /home/ && mv /home/iPIC3D/build/iPIC3Dlib.so /home/ \
+    && mv /home/kubv2/iPIC3D/GEM2D.inp /home/ && cd /home/ && mkdir data
 RUN apt-get install -y python3-pip
 RUN pip install grpcio grpcio-tools psutil kubernetes retrying --break-system-packages
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-RUN cd /home/ && git clone http://github.com/raijenki/kubv2.git
 WORKDIR /home
 SHELL ["/bin/bash", "-l", "-c"]
 RUN mkdir -p /var/run/sshd;

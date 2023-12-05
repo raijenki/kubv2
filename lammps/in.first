@@ -16,6 +16,7 @@ region		box block 0 ${xx} 0 ${yy} 0 ${zz}
 create_box	1 box
 create_atoms	1 box
 mass		1 1.0
+write_restart restart.equil
 
 velocity	all create 1.44 87287 loop geom
 

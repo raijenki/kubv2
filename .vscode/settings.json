@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ifaddrs.h": "c",
+        "perf_util.h": "c"
+    }
+}

@@ -1,0 +1,5 @@
+level,time,interf-time
+NI,588.82,0
+LI,617.151,179
+MI,654,308
+HI,662,409

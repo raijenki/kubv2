@@ -21,8 +21,9 @@ RUN  apt-get update --fix-missing \
      && apt-get install -y ssh time python3
 RUN cd /home/ && git clone https://github.com/hypre-space/hypre.git \
     && cd hypre/src/cmbuild \
-    && cmake .. && make install
-RUN cd /home/hypre/src/examples && make && cp ex13 /home/
+    && cmake -DHYPRE_WITH_OPENMP=ON .. && make install
+
+RUN cd /home/hypre/src/examples && sed -i 's/$(LOPTS_DOMP)/-fopenmp/' Makefile && make && cp ex13 /home/
 RUN apt-get install -y python3-pip
 RUN pip install grpcio grpcio-tools psutil kubernetes retrying --break-system-packages
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache

@@ -24,7 +24,7 @@ spec:
                   MPI_HOST=`cat /etc/volcano/mpiworker.host | tr "\n" ","`;
                   mkdir -p /var/run/sshd; /usr/sbin/sshd;
                   mpiexec --allow-run-as-root -wdir /home/kubv2/cm1/ --host ${MPI_HOST} -np 3 /home/kubv2/cm1/cm1.exe;
-              image: raijenki/mpik8s:cm1
+              image: raijenki/mpik8s:cm1arm
               imagePullPolicy: IfNotPresent
               name: mpimaster
               ports:
@@ -42,9 +42,12 @@ spec:
                 - -c
                 - |
                   mkdir -p /var/run/sshd; /usr/sbin/sshd -D;
-              image: raijenki/mpik8s:cm1
+              image: raijenki/mpik8s:cm1arm
               imagePullPolicy: IfNotPresent
               name: mpiworker
+              resources:
+                requests:
+                  cpu: "6000m"
               ports:
                 - containerPort: 22
                   name: mpijob-port

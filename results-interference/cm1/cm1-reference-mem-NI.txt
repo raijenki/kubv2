@@ -1,0 +1,15 @@
+time                           architecture host   mtm     os     refill_cpu0 refill_cpu1 refill_cpu2 refill_cpu3 refill_cpu4 refill_cpu5 refill_cpu6 refill_cpu7 serial_no
+----                           ------------ ----   ---     --     ----------- ----------- ----------- ----------- ----------- ----------- ----------- ----------- ---------
+2023-12-07T13:45:40.334291287Z aarch64      node-5 unknown Ubuntu 734         7           0           0           9           0           0           0           unknown
+2023-12-07T13:46:10.334263451Z aarch64      node-5 unknown Ubuntu 0           0           0           8           0           0           0           0           unknown
+2023-12-07T13:46:40.334500058Z aarch64      node-5 unknown Ubuntu 0           7           0           66          0           0           0           0           unknown
+2023-12-07T13:47:10.338014071Z aarch64      node-5 unknown Ubuntu 0           0           0           6           0           0           23          0           unknown
+2023-12-07T13:47:40.335113787Z aarch64      node-5 unknown Ubuntu 1           0           753         6           0           0           0           33          unknown
+2023-12-07T13:48:10.334601368Z aarch64      node-5 unknown Ubuntu 18          0           199         0           79          9           0           0           unknown
+2023-12-07T13:48:40.335190201Z aarch64      node-5 unknown Ubuntu 0           148         0           0           0           9           0           0           unknown
+2023-12-07T13:49:10.335606853Z aarch64      node-5 unknown Ubuntu 2           292         0           0           1           9           0           0           unknown
+2023-12-07T13:49:40.335728113Z aarch64      node-5 unknown Ubuntu 6           6           505         1165        819         193         708         117         unknown
+2023-12-07T13:50:10.336199134Z aarch64      node-5 unknown Ubuntu 588         0           0           0           0           0           82          12          unknown
+2023-12-07T13:50:40.335232859Z aarch64      node-5 unknown Ubuntu 2           0           2           0           0           6           1           0           unknown
+2023-12-07T13:51:10.335836983Z aarch64      node-5 unknown Ubuntu 23          33          0           849         0           31          0           11          unknown
+2023-12-07T13:51:40.336251805Z aarch64      node-5 unknown Ubuntu 301         33          0           0           0           5           0           0           unknown

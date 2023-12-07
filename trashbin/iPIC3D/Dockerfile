@@ -22,7 +22,7 @@ RUN  apt-get update --fix-missing \
 RUN cd /home/ && git clone https://github.com/MKLepium/iPIC3D.git \
     && cd iPIC3D && mkdir build && cd build \
     && cmake .. && make && make install
-RUN mv /home/iPIC3D/build/iPIC3D /home/iPIC3D && mv /home/iPIC3D/build/libiPIC3Dlib.so /home/
+RUN mv /home/iPIC3D/build/iPIC3D /home/iPICbin && mv /home/iPIC3D/build/libiPIC3Dlib.so /home/
 RUN cd /home/ && git clone https://github.com/raijenki/kubv2.git && mv /home/kubv2/iPIC3D/GEM2D.inp /home/ && cd /home/ && mkdir data
 RUN apt-get install -y python3-pip
 RUN pip install grpcio grpcio-tools psutil kubernetes retrying --break-system-packages

@@ -1,5 +1,5 @@
 level,time,interf-time
 NI,731,0
-LI,
-MI,
-HI,
+LI,907,231
+MI,1039,410
+HI,1178,536
